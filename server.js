@@ -28,7 +28,7 @@ app.use(limiter);
 
 
 // AES Encryption/Decryption Middleware
-const ENCRYPTION_KEY =  '12345678901234567890123456789012';
+const ENCRYPTION_KEY =  process.env.ENCRYPTION_KEY
 const IV_LENGTH = 16;
 
 const encrypt = (text) => {
