@@ -4,17 +4,21 @@ const Op = db.Sequelize.Op;
 
 exports.create = async (req, res) => {
     try {
-        // Validate request
         const { name, email } = req.body;
 
         if (!name || !email) {
             return res.status(400).json({ message: "Name and Email are required!" });
         }
+        const user = await User.findOne({ where: { email } });
 
-        // Create a new User
+        if (user) {
+            return res.status(400).json({ 
+                message: "User with this email already exists",
+            });
+        }
+
         const newUser = await User.create({ name, email });
 
-        // Respond with the created user
         res.status(201).json(newUser);
     } catch (error) {
         console.error("Error creating user:", error);
